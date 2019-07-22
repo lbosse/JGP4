@@ -1,4 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -46,6 +49,7 @@ public class LibraryPanel extends JPanel {
 		border1.setTitlePosition(TitledBorder.CENTER);
 		loadLibraryPanel.setBorder(border1);
 		loadLibraryPanel.add(load);
+		load.addActionListener(new loadListener());
 
 
 
@@ -60,6 +64,44 @@ public class LibraryPanel extends JPanel {
 
 
 	}
+	
+	private class loadListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			
+		
+		String a = description.getText();
+		Library lib = new Library();
+		lib.loadLibraryFromCSV(a);
+		
+		
+		for (int index = 0; index < lib.getSize(); index++) {
+			//String s = lib.
+			//JButton button = new JButton(lib.getBook(index).getTitle());
+			BookButton button = new BookButton(lib.getBook(index));
+			//Book b = new Book();
+			//BookButton button = new BookButton(button.getBookButton());
+			//button.addActionListener(book listner here);
+			listPanel.add(button);
+			System.out.println(a);
+			
+		}
+		listPanel.revalidate();
 
+	}
 
+	}
+	
+	private class bookButtonListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			// on click load book to bookWindow
+			
+			
+		}
+		
+		
+		
+	}
 }
