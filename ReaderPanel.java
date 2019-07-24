@@ -11,10 +11,11 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 public class ReaderPanel extends JPanel {
-	private JLabel label, title;
+	private JLabel label, title, author;
 	private JTextArea readBook;
 	private JScrollPane bookWindow;
 	private String bookTitle = "";
+	private String bookAuthor = "";
 	private JPanel information;
 
 
@@ -42,11 +43,11 @@ public class ReaderPanel extends JPanel {
 		title = new JLabel();
 		title.setText("title 11" + getBookTitle());
 		information.add(title);
-
-		//JLabel author = new JLabel("Author");
+System.out.println(bookTitle + "222");
+		 author = new JLabel("Author");
 		//JLabel pageNumber = new JLabel("Page");
 		
-		//information.add(author);
+		information.add(author);
 		//information.add(pageNumber);
 
 		
@@ -106,10 +107,25 @@ public class ReaderPanel extends JPanel {
 	}
 	public void setBookTitle(String name) {
 		this.bookTitle = name;
-		title.revalidate();
+		//title.revalidate();
 		System.out.println(bookTitle);
+		information.remove(title);
+		
+		JLabel n = new JLabel("title "+ bookTitle);
+		information.add(n);
+		//information.revalidate();
+		
 
 
+	}
+	public void setBookAuthor(String BookAuthor) {
+		this.bookAuthor= BookAuthor;
+		information.remove(author);
+		JLabel a = new JLabel("Author " + bookAuthor);
+		information.add(a);
+		//information.revalidate();
+		
+		
 	}
 public String getBookTitle() {
 	return bookTitle;

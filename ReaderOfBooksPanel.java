@@ -40,8 +40,9 @@ public class ReaderOfBooksPanel extends JPanel  {
 			Book b = (((BookButton)e.getSource()).getBookButton());
 			readerPanel.setText(b.getText());
 			readerPanel.setBookTitle(b.getTitle());
-			//readerPanel.revalidate();
-			System.out.println("ff");
+			readerPanel.setBookAuthor(b.getAuthor());
+			readerPanel.revalidate();
+			
 		}
 		
 	}
