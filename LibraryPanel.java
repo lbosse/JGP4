@@ -18,10 +18,12 @@ public class LibraryPanel extends JPanel {
 	private JButton bookButton;
 	private JPanel listPanel, loadLibraryPanel;
 	JTextField description = new JTextField(15);
+	private ActionListener bookButtonListener;
 
-	public LibraryPanel(String string) {
-		label = new JLabel(string);
+	public LibraryPanel(ActionListener BookButtonListener) {
+		//label = new JLabel(string);
 		this.setLayout(new BorderLayout());
+		this.bookButtonListener = BookButtonListener;
 		
 
 		//make book list panel
@@ -29,10 +31,7 @@ public class LibraryPanel extends JPanel {
 		
 
 
-		bookButton = new JButton("Add Task");
-		JButton bookButton2 = new JButton("Add Task");
-		listPanel.add(bookButton);
-		listPanel.add(bookButton2);
+		
 		TitledBorder border = new TitledBorder("Book List");
 		border.setTitleJustification(TitledBorder.LEFT);
 		border.setTitlePosition(TitledBorder.CENTER);
@@ -48,8 +47,9 @@ public class LibraryPanel extends JPanel {
 		border1.setTitleJustification(TitledBorder.LEFT);
 		border1.setTitlePosition(TitledBorder.CENTER);
 		loadLibraryPanel.setBorder(border1);
-		loadLibraryPanel.add(load);
 		load.addActionListener(new loadListener());
+		loadLibraryPanel.add(load);
+		
 
 
 
@@ -77,8 +77,10 @@ public class LibraryPanel extends JPanel {
 		
 		for (int index = 0; index < lib.getSize(); index++) {
 			//String s = lib.
+			
 			//JButton button = new JButton(lib.getBook(index).getTitle());
 			BookButton button = new BookButton(lib.getBook(index));
+			button.addActionListener(bookButtonListener);
 			//Book b = new Book();
 			//BookButton button = new BookButton(button.getBookButton());
 			//button.addActionListener(book listner here);
@@ -92,16 +94,9 @@ public class LibraryPanel extends JPanel {
 
 	}
 	
-	private class bookButtonListener implements ActionListener {
-		
-		public void actionPerformed(ActionEvent e) {
-			
-			// on click load book to bookWindow
-			
-			
-		}
+	
 		
 		
 		
 	}
-}
+

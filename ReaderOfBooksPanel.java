@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -19,7 +21,7 @@ public class ReaderOfBooksPanel extends JPanel  {
 		readerBorder.setTitlePosition(TitledBorder.TOP);
 		readerPanel.setBorder(readerBorder);
 		
-		libraryPanel = new LibraryPanel("library");
+		libraryPanel = new LibraryPanel(new BookButtonListener());
 		add(libraryPanel, BorderLayout.WEST);
 		TitledBorder libraryBorder = new TitledBorder("Library");
 		libraryBorder.setTitleJustification(TitledBorder.LEFT);
@@ -30,6 +32,18 @@ public class ReaderOfBooksPanel extends JPanel  {
 	}
 	
 	
-	
+	private class BookButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("bookbuttonlistener");
+			Book b = (((BookButton)e.getSource()).getBookButton());
+			readerPanel.setText(b.getText());
+			readerPanel.setBookTitle(b.getTitle());
+			//readerPanel.revalidate();
+			System.out.println("ff");
+		}
+		
+	}
 	
 }
