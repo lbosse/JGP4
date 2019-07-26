@@ -38,10 +38,18 @@ public class ReaderOfBooksPanel extends JPanel  {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("bookbuttonlistener");
 			Book b = (((BookButton)e.getSource()).getBookButton());
-			readerPanel.setText(b.getText());
-			readerPanel.setBookTitle(b.getTitle());
-			readerPanel.setBookAuthor(b.getAuthor());
-			readerPanel.revalidate();
+			readerPanel.setBook(b);
+			
+//			readerPanel.setText(b.getText());
+//			
+//			readerPanel.setBookTitle(b.getTitle());
+//			readerPanel.setBookAuthor(b.getAuthor());
+//			
+//			readerPanel.setPageNumber();
+//			readerPanel.revalidate();
+			
+			
+			//information.revalidate();
 			
 		}
 		
