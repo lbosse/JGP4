@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
 public class ReaderPanel extends JPanel {
@@ -19,18 +20,16 @@ public class ReaderPanel extends JPanel {
 	private String bookTitle = "";
 	private String bookAuthor = "";
 	private JPanel information;
-private JScrollBar scroll;
+	private JScrollBar scroll;
 
 	public ReaderPanel(String string) {
-		//initialize 
-
-
+		// initialize
 
 		label = new JLabel(string);
 		add(label);
 		this.setLayout(new BorderLayout());
 
-		//top infor area
+		// top info area
 		information = new JPanel();
 		add(information, BorderLayout.NORTH);
 		TitledBorder border2 = new TitledBorder("information");
@@ -46,20 +45,14 @@ private JScrollBar scroll;
 		author = new JLabel("Author:    ");
 		information.add(author);
 
-
-		//page number section
-		 pageNumber = new JLabel("Page:  ");
+		// page number section
+		pageNumber = new JLabel("Page:  ");
 		information.add(pageNumber);
-
-
-
 
 		// content area
 		readBook = new JTextArea();
-		add(readBook, BorderLayout.CENTER);
-
-
-		//bottom navigation
+		
+		// bottom navigation
 		JPanel navigation = new JPanel();
 		add(navigation, BorderLayout.SOUTH);
 		TitledBorder border1 = new TitledBorder("navigation");
@@ -67,18 +60,16 @@ private JScrollBar scroll;
 		border1.setTitlePosition(TitledBorder.CENTER);
 		navigation.setBorder(border1);
 
-		//bottom nav button
+		// bottom nav button
 		JButton pageUp = new JButton("Page Up");
 		JButton pageDown = new JButton("Page Down");
 		navigation.add(pageUp);
 		pageUp.addActionListener(new PageUpListener());
 		navigation.add(pageDown);
 		pageDown.addActionListener(new PageDownListener());
-		
 
-
-		//scroll pane
-		bookWindow = new JScrollPane(readBook); //JTextArea that you add to a scrollPane 
+		// scroll pane
+		bookWindow = new JScrollPane(readBook); // JTextArea that you add to a scrollPane
 		bookWindow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		bookWindow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		TitledBorder border = new TitledBorder("Content");
@@ -88,98 +79,96 @@ private JScrollBar scroll;
 
 		add(bookWindow, BorderLayout.CENTER);
 
-		
-			
-		 
-		
-		//make scroll to use for paging and movements
-		//scroll = new JScrollBar();
-		
-		//scroll = bookWindow.getVerticalScrollBar();
-		
-		
-		
+		// make scroll to use for paging and movements
+		// scroll = new JScrollBar();
 
+		// scroll = bookWindow.getVerticalScrollBar();
 
 	}
+
 	public void setText(String text) {
 		readBook.setText(text);
-
+		readBook.setCaretPosition(0);
+		readBook.invalidate();
+		bookWindow.revalidate();
 	}
 
 	public void setBookTitle(String name) {
 		this.bookTitle = name;
-		System.out.println(bookTitle);
 		title.setText("Title:  " + bookTitle + "  ");
 	}
 
 	public void setBookAuthor(String BookAuthor) {
-		this.bookAuthor= BookAuthor;
+		this.bookAuthor = BookAuthor;
 		author.setText("Author:  " + bookAuthor + "  ");
 	}
 
 	public String getBookTitle() {
 		return bookTitle;
 	}
-	
-	public void setPageNumber() {  //this still isnt working
-		
-		//int p = scroll.getMinimum() - scroll.getMaximum();
-		//System.out.println(p);
-		
-		//JScrollBar scroll1 = bookWindow.getVerticalScrollBar();
-		
-		
+
+	public void setPageNumber() { // this still isnt working
+
+		// int p = scroll.getMinimum() - scroll.getMaximum();
+		// System.out.println(p);
+
+		// JScrollBar scroll1 = bookWindow.getVerticalScrollBar();
+
 		double p = scroll.getMaximum();
 		double o = scroll.getBlockIncrement(1);
-		
-		double paging = (p/o);
+
+		double paging = (p / o);
 		System.out.println(p);
 		System.out.println(o);
-		pageNumber.setText("Page: 1/" + paging );
-		
-		
-		//int p = scroll.getValue();
-		//System.out.println(p);
-		
+		pageNumber.setText("Page: 1/" + paging);
+
+		// int p = scroll.getValue();
+		// System.out.println(p);
+
 	}
+
 	public void setBook(Book b) {
 		setText(b.getText());
-		
 		setBookTitle(b.getTitle());
 		setBookAuthor(b.getAuthor());
-		revalidate();
-		double r = bookWindow.getVerticalScrollBar().getMaximum();
-		revalidate();
-		//double p = scroll1.getMaximum();
-		System.out.println(r);
+		Runnable getPages = new Runnable() {
+		     public void run() {
+		    	 	double r = bookWindow.getVerticalScrollBar().getMaximum();
+		    	 	System.out.println(r);
+		     }
+		 };
+
+		 SwingUtilities.invokeLater(getPages);
 		
-		//setPageNumber();
-		//revalidate();
-		
+		// double p = scroll1.getMaximum();
+
+		// setPageNumber();
+		// revalidate();
+
 	}
-	
-	private class PageUpListener implements ActionListener  {
+
+	private class PageUpListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			System.out.println("you click page up ");
 			scroll.setValue(scroll.getValue() - scroll.getBlockIncrement(1));
-			
+
 		}
-		 
+
 	}
-	private class PageDownListener implements ActionListener  {
+
+	private class PageDownListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			System.out.println("you click page down ");
 			scroll.setValue(scroll.getValue() + scroll.getBlockIncrement(1));
-			
+
 		}
-		 
+
 	}
 
 }
